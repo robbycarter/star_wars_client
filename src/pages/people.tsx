@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import Layout from "../components/layout";
 import { PersonCard } from "../components/components";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, useLazyQuery, gql } from "@apollo/client";
 import QueryResult from "../components/query-result";
+import { Person } from "../types";
 
 export const PEOPLE = gql`
 	query People($page: Int!) {
@@ -26,19 +27,46 @@ export const PEOPLE = gql`
 	}
 `;
 
-const People = () => {
+export const SEARCH_PEOPLE = gql`
+	query searchPerson($name: String!) {
+		searchPerson(name: $name) {
+			count
+			hasMore
+			results {
+				id
+				name
+				height
+				mass
+				homeworld {
+					name
+					gravity
+					terrain
+					population
+				}
+			}
+		}
+	}
+`;
+
+const People: FC = () => {
+	const [getPeople, setPeople] = useState<Person[]>();
+
 	const [getPageNumber, setPageNumber] = useState<number>(1);
-	// const [getSearch, setSearch] = useState<string>("");
+
+	const [searchResults, setSearchResults] = useState<Person[]>();
+	const [getSearch, setSearch] = useState<string>("");
+	const [searchName, setSearchName] = useState("");
+
+	const [searchPosts, { data: SearchData }] = useLazyQuery(SEARCH_PEOPLE, {
+		variables: { name: "sky" },
+	});
 
 	const { loading, error, data } = useQuery(PEOPLE, {
 		variables: { page: getPageNumber },
 	});
 
-	useEffect(() => {}, [getPageNumber]);
-
 	const people = data?.people?.results;
 	const hasMore = data?.people?.hasMore;
-	// const count = data?.people?.count;
 
 	return (
 		<Layout pagename="People">
@@ -48,6 +76,7 @@ const People = () => {
 						type="search"
 						className="w-3/4 bg-purple-white shadow rounded border-0 p-3 mr-2"
 						placeholder="Search by name..."
+						onChange={(e) => setSearchName(e.target.value)}
 					/>
 					<div className="pin-r pin-t mt-3 mr-4 text-purple-lighter">
 						<svg

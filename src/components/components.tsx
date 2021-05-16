@@ -67,7 +67,6 @@ export const PersonDetails: FC<Person> = ({
   mass,
   homeworld,
 }) => {
-  
   return (
     <div className="max-w-md w-full lg:flex">
       <div className="border-r border-b border-l border-grey-light lg:border-l-0 lg:border-t lg:border-grey-light bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
@@ -84,10 +83,14 @@ export const PersonDetails: FC<Person> = ({
               <span className="font-medium">Origin Planet: </span>
               <span className="capitalize"> {homeworld?.name}</span>
             </p>
-            <p className="text-grey-dark">{homeworld?.name} has a population of  {homeworld?.population}. It is a {homeworld?.terrain} terrain</p>
+            <p className="text-grey-dark">
+              {homeworld?.name} has a population of {homeworld?.population}. It
+              is a {homeworld?.terrain} terrain
+            </p>
           </div>
         </div>
       </div>
     </div>
   );
 };
+

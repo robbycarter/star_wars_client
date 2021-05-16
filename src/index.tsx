@@ -6,7 +6,7 @@ import { ApolloProvider } from '@apollo/client/react';
 import './styles.css';
 
 const client = new ApolloClient({
-	uri: "https://ppmhm.sse.codesandbox.io/graphql",
+	uri: process.env.REACT_APP_APOLLO_LINK,
 	cache: new InMemoryCache(),
 });
 
