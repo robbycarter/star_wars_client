@@ -94,3 +94,49 @@ export const PersonDetails: FC<Person> = ({
   );
 };
 
+export const PageNumbering: FC<{
+  currentPageNumber: number;
+  total: number;
+  switchPage: (page: number) => void;
+}> = ({ currentPageNumber, total, switchPage }) => {
+  const pageNumbers: number[] = [];
+  let renderPageNumbers;
+
+  if (total) {
+    for (let i: number = 1; i <= Math.ceil(total / 10); i++) {
+      pageNumbers.push(i);
+    }
+
+    renderPageNumbers = pageNumbers.map((number) => {
+      let active_classes =
+        "w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-blue-500";
+      let classes =
+        "w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent";
+
+      if (
+        number === 1 ||
+        number === total ||
+        (number >= currentPageNumber - 3 && number <= currentPageNumber + 3)
+      ) {
+        return (
+          <button
+            key={number}
+            aria-current="page"
+            onClick={() => {
+              switchPage(number)
+            }}
+            className={currentPageNumber === number ? active_classes : classes}
+          >
+            {number}
+          </button>
+        );
+      } else {
+        return null;
+      }
+    });
+
+    renderPageNumbers = renderPageNumbers.filter((x) => x);
+  }
+
+  return <div className="flex items-center my-2">{renderPageNumbers}</div>;
+};
