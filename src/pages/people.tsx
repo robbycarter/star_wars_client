@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../components/layout";
 import { PersonCard } from "../components/components";
 import { useQuery, gql } from "@apollo/client";
@@ -28,7 +28,7 @@ export const PEOPLE = gql`
 
 const People = () => {
 	const [getPageNumber, setPageNumber] = useState<number>(1);
-	const [getSearch, setSearch] = useState<string>("");
+	// const [getSearch, setSearch] = useState<string>("");
 
 	const { loading, error, data } = useQuery(PEOPLE, {
 		variables: { page: getPageNumber },
@@ -38,7 +38,7 @@ const People = () => {
 
 	const people = data?.people?.results;
 	const hasMore = data?.people?.hasMore;
-	const count = data?.people?.count;
+	// const count = data?.people?.count;
 
 	return (
 		<Layout pagename="People">
@@ -85,7 +85,7 @@ const People = () => {
 				</div>
 
 				<div className="flex flex-row justify-between mt-5 mb-10">
-					{getPageNumber != 1 && (
+					{getPageNumber !== 1 && (
 						<button className="ml-0 mr-auto py-1 px-3 bg-gray-500 hover:bg-blue-700 rounded-lg text-white text-center flex flex-row items-center">
 							<div
 								className="flex flex-row justify-between items-center"

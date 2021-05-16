@@ -1,4 +1,3 @@
-import { useState, useEffect, useContext } from "react";
 import Layout from "../components/layout";
 import { PersonDetails } from "../components/components";
 import { useQuery, gql } from "@apollo/client";

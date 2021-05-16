@@ -74,7 +74,7 @@ export const PersonDetails: FC<Person> = ({
         <div className="mb-8">
           <div className="text-black font-bold text-xl mb-2">{name}</div>
           <p className="text-grey-darker text-base">
-            {name} ({gender == "n/a" ? "Unknown Gender" : gender}) has a height
+            {name} ({gender === "n/a" ? "Unknown Gender" : gender}) has a height
             of {height} and weighs {mass}.
           </p>
         </div>
